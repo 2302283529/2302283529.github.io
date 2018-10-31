@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "1a9ad614"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="高并发," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="忘记为止" type="application/atom+xml" />
+
+
+
+
+  <meta property="fb:admins" content="prod_226207cd2a81c11032de04209925bd1f" />
+  <meta property="fb:app_id" content="cytNeRsd6" />
+
+
+
+<meta name="description" content="信号量机制:        ★★★★★★★★★★★★★★★★★★★★★★                   1.    ThreadPool使用情况                            ★★★★★★★★★★★★★★★★★★★★        其实“ThreadPool”就是用了存放“线程”的对象池。        在多线程编程中，线程的创建和销毁是非常消耗系统资源的，因此，C#">
+<meta name="keywords" content="高并发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="信号量机制---线程池相关实现，">
+<meta property="og:url" content="https://2302283529.github.io/2018/09/20/Thread/RelatedExperiments/index.html">
+<meta property="og:site_name" content="忘记为止">
+<meta property="og:description" content="信号量机制:        ★★★★★★★★★★★★★★★★★★★★★★                   1.    ThreadPool使用情况                            ★★★★★★★★★★★★★★★★★★★★        其实“ThreadPool”就是用了存放“线程”的对象池。        在多线程编程中，线程的创建和销毁是非常消耗系统资源的，因此，C#">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://2302283529.github.io/images/线程池相关实验代码图.png">
+<meta property="og:image" content="https://2302283529.github.io/images/线程池相关实验代码图1.png">
+<meta property="og:image" content="https://2302283529.github.io/images/线程池实验.png">
+<meta property="og:image" content="https://2302283529.github.io/images/线程池实验1.png">
+<meta property="og:updated_time" content="2018-10-12T03:10:31.965Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="信号量机制---线程池相关实现，">
+<meta name="twitter:description" content="信号量机制:        ★★★★★★★★★★★★★★★★★★★★★★                   1.    ThreadPool使用情况                            ★★★★★★★★★★★★★★★★★★★★        其实“ThreadPool”就是用了存放“线程”的对象池。        在多线程编程中，线程的创建和销毁是非常消耗系统资源的，因此，C#">
+<meta name="twitter:image" content="https://2302283529.github.io/images/线程池相关实验代码图.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://2302283529.github.io/2018/09/20/Thread/RelatedExperiments/"/>
+
+
+
+
+
+
+
+  <title>信号量机制---线程池相关实现， | 忘记为止</title>
+  
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : 'cytNeRsd6',
+      xfbml      : true,
+      version    : 'v2.10'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/zh_Hans/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'your-analytics-id', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+  </script>
+   
+
+
+  
+  
+    
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="www.syson.top" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">忘记为止</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">孤芳自赏</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://2302283529.github.io/2018/09/20/Thread/RelatedExperiments/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="忘记为止">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatarInsert.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="忘记为止">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">信号量机制---线程池相关实现，</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-20T09:52:23+08:00">
+                2018-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/高并发/" itemprop="url" rel="index">
+                    <span itemprop="name">高并发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/20/Thread/RelatedExperiments/" class="leancloud_visitors" data-flag-title="信号量机制---线程池相关实现，">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,216
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><span id="inline-blue">信号量机制:</span><br>        ★★★★★★★★★★★★★★★★★★★★★★                   1.    ThreadPool使用情况                            ★★★★★★★★★★★★★★★★★★★★<br>        其实“ThreadPool”就是用了存放“线程”的对象池。<br>        在多线程编程中，线程的创建和销毁是非常消耗系统资源的，因此，C#引入了池的概念，类似的还有数据库连接池，这样，维护一个池，池内维护的一些线程，需要的时候从池中取出来，不需要的时候放回去，这样就避免了重复创建和销毁线程。<br>        个人理解:托管的线程队列,管理线程队列的容器，像你经常喝水的杯子来承载你需要喝的水。<br> <a id="more"></a><br> <span id="inline-yellow">CLR线程池:</span><br>       在.NET中，CLR线程和操作系统线程对应，您可以简单地认为.NET中的Thread对象便封装了一个操作系统线程，并附带一些托管环境下所需要的数据(如GC Handle)。而CLR线程池便是存放这些CLR线程的对象池。我们在编写程序的时候，可以使用ThreadPool类的两个静态方法：QueueUserWorkItem和UnsafeUserQueueWorkItem向CLR线程池中添加任务(一个WorkCallback委托对象)，这两个方法的区别，在与前者会收集调用方的ExecutionContext,也就是保留了的当前线程的执行信息(如认证或语言文化等)，使任务最终会在“创建”时刻的环境中执行–后者就不会。因此，如果比较两个方法的绝对性能，Unsafa方法会略胜一筹。但是平时还是建议使用QueueUserWorkltem方法，因为保留执行上下会避免很多麻烦事情，且这点性能耗损其实算不上什么。<br>       CLR线程池在.NET框架中的作用很大，除了让程序员使用之外，其他一些功能也会依赖CLR线程池，如ThreadPool.RegisterWaitForSingleObject方法，或是System.Threading组件–还有更重要可能也是更隐藏的；ASP.NET在得到一个请求后，也会将这个请求处理的任务交由CLR线程池去执行–请注意，它们最多只是添加任务而已，并不表示任务会立即执行，所有添加到CLR线程池的任务都会在合适的时候得以执行–可能马上，也可能稍等片刻，甚至更久。向CLR线程池添加任务时，任务会被临时放到一个队列中，并在合适的时候执行。那么怎么样才算是“合适的时候”？简单的概括说来，便是线程池内有空闲的线程，或线程池所管理的线程数量还没有达到上限的时候。如果有空闲的线程，线程池就会立即让它领取一个任务执行。如果是第二种情况，线程池便会创建新的Thread对象。由于让操作系统管理太多线程反而会造成性能下降，因此CLR线程池会有一个上限。不同的托管环境会设置不同的上限。如在.NET 2.0 SP1之后，普通的Windows应用程序（如控制台或WinForm/WPF），会将其设置为“处理器数 * 250”。也就是说，如果您的机器为2个2核CPU，那么CLR线程池的容量默认上限便是1000，也就是说，它最多可以管理1000个线程同时运行——很多情况下这已经是一个很可怕的数字了，如果您觉得这还不够，那么就应该考虑一下您的实现方式是否可以改进了。</p>
+<p>对于ASP.NET应用程序来说，CLR线程池容量代表了应用程序最多可以同时执行的请求数量。对于托管在IIS上的ASP.NET执行环境来说，这个值由全局配置决定。这个配置在machine.config文件中system.web/processModel节点中，为maxWorkerThreads属性，它决定了为单个处理器分配的线程数。如果这个值为40，且机器上拥有4个处理器（2 * 2CPU），那么这台机器目前的配置表示在同一时刻，ASP.NET可以同时处理160个请求。某些参考资料建议您将其修改为每处理器80-100个线程，这时您只要修改相应的属性值就可以了。</p>
+<p>既然有最大值，也就相应有了最小值，它代表了CLR线程池“总是会保留”的最少线程数量。由于线程会占用资源，如在默认情况下，每个线程将获得1MB大小的栈空间3。所以如果在系统中保留太多空闲线程对资源也是一种浪费。因此，CLR线程池在使用大量线程处理完大量任务之后，也会逐步地释放线程，直至到达最小值。CLR线程池的最小线程数量确保了在任务数量较少的情况下，新来的任务可以立即执行，从而省去了创建新线程的时间。在普通应用程序中这个值为“处理器数 * 1”，而在ASP.NET应用程序中这个值配置在machine.config文件中system.web/processModel节点的minWorkerThreads属性中4。</p>
+<p>在某些时候可能会遇到这样的情况：在一个瞬间忽然来大量任务，每个任务的执行时间说长不长说短不短，不过足以导致线程池快速分配数百个线程。如果这个峰值之后就一片平静，那么势必造成大量空闲的线程，这种开销对性能的损耗也非常明显。因此，CLR线程池限制了线程的创建速度不超过每秒2个。这样，即使在某个瞬时获得了大量的任务，CLR线程池也可以使用相对较少的线程来完成所有工作5。</p>
+<p>但是，还有一种情况也值得考虑。例如，对于一个比较繁忙的Web应用程序来说，一打开便会涌入大量的连接。由于线程的创建速度有限，因此可以执行的请求数量也只能慢慢增加。对于这种您预料到会产生大量线程，而且忙碌状况会持续一段时间的情况，限制线程的创建速度反而会带来损伤效率。这时，您就可以手动设置CLR线程池的最小线程数量。如果此时CLR线程池中拥有的线程数量较少，那么系统就会立即创建一定数量的线程来达到这个最小值。设置和获取CLR线程池最小线程数量的接口为:</p>
+<pre><code>public static class ThreadPool
+{
+    public static void GetMinThreads(out int workerThreads, out int completionPortThreads);
+    public static bool SetMinThreads(int workerThreads, int completionPortThreads);
+}
+</code></pre><p>这两个接口的作用和使用方式应该足够明显了（不理解的话可以查阅MSDN），其中workerThreads参数便是CLR线程池的最小线程数，而completionPortThreads涉及到我们下次要讨论IO线程池，在此就不多作展开了。除了设置和读取CLR最小线程数的方法之外，ThreadPool还包含这些接口：</p>
+<pre><code>public static class ThreadPool
+{
+    public static void GetMaxThreads(out int workerThreads, out int completionPortThreads);
+    public static bool SetMaxThreads(int workerThreads, int completionPortThreads);
+    public static void GetAvailableThreads(out int workerThreads, out int completionPortThreads);
+}
+</code></pre><p>值得注意的是，无论是设置还是获取到的这些数值，都与处理器数量没有任何关系了。也就是说，在一台2 * 2CPU的机器上运行一个普通的.NET应用程序时：</p>
+<pre><code>1.调用GetMaxThreads方法将获得1000，表示CLR线程池最大容量为1000（250 * 4），而不是250。
+2.调用SetMinThreads并传入100，表示CLR线程池所拥有的最小线程数量为100，而不是400（100 * 4）。
+3.对于CLR线程池的简单描述就暂时先到这里了。如果您还有什么疑问请提出，我会加以补充。
+</code></pre><p><span id="inline-purple">独立线程池:</span><br>   上次我们讨论到，在一个.NET应用程序中会有一个CLR线程池，可以使用ThreadPool类中的静态方法来使用这个线程池。我们只要使用QueueUserWorkItem方法向线程池中添加任务，线程池就会负责在合适的时候执行它们。我们还讨论了CLR线程池的一些高级特性，例如对线程的最大和最小数量作限制，对线程创建时间作限制以避免突发的大量任务消耗太多资源等等。</p>
+<p>   那么.NET提供的线程池又有什么缺点呢？有些朋友说，一个重要的缺点就是功能太简单，例如只有一个队列，没法做到对多个队列作轮询，无法取消任务，无法设定任务优先级，无法限制任务执行速度等等。不过其实这些简单的功能，倒都可以通过在CLR线程池上增加一层（或者说，通过封装CLR线程池）来实现。例如，您可以让放入CLR线程池中的任务，在执行时从几个自定义任务队列中挑选一个运行，这样便达到了对多个队列作轮询的效果。因此，在我看来，CLR线程池的主要缺点并不在此。</p>
+<p>   我认为，CLR线程池的主要问题在于“大一统”，也就是说，整个进程内部几乎所有的任务都会依赖这个线程池。如前篇文章所说的那样，如Timer和WaitForSingleObject，还有委托的异步调用，.NET框架中的许多功能都依赖这个线程池。这个做法是合适的，但是由于开发人员对于统一的线程池无法做到精确控制，因此在一些特别的需要就无法满足了。举个最常见例子：控制运算能力。什么是运算能力？那么还是从线程讲起吧1。</p>
+<p>   我们在一个程序中创建一个线程，安排给它一个任务，便交由操作系统来调度执行。操作系统会管理系统中所有的线程，并且使用一定的方式进行调度。什么是“调度”？调度便是控制线程的状态：执行，等待等等。我们都知道，从理论上来说有多少个处理单元（如2 * 2 CPU的机器便有4个处理单元），就表示操作系统可以同时做几件事情。但是线程的数量会远远超过处理单元的数量，因此操作系统为了保证每个线程都被执行，就必须等一个线程在某个处理器上执行到某个情况的时候，“换”一个新的线程来执行，这便是所谓的“上下文切换（context switch）”。至于造成上下文切换的原因也有多种，可能是某个线程的逻辑决定的，如遇上锁，或主动进入休眠状态（调用Thread.Sleep方法），但更有可能是操作系统发现这个线程“超时”了。在操作系统中会定义一个“时间片（timeslice）”2，当发现一个线程执行时间超过这个时间，便会把它撤下，换上另外一个。这样看起来，多个线程——也就是多个任务在同时运行了。</p>
+<p>   值得一提的是，对于Windows操作系统来说，它的调度单元是线程，这和线程究竟属于哪个进程并没有关系。举个例子，如果系统中只有两个进程，进程A有5个线程，而进程B有10个线程。在排除其他因素的情况下，进程B占有运算单元的时间便是进程A的两倍。当然，实际情况自然不会那么简单。例如不同进程会有不同的优先级，线程相对于自己所属的进程还会有个优先级；如果一个线程在许久没有执行的时候，或者这个线程刚从“锁”的等待中恢复，操作系统还会对这个线程的优先级作临时的提升——这一切都是牵涉到程序的运行状态，性能等情况的因素，有机会我们在做展开。</p>
+<p>   现在您意识到线程数量意味着什么了没？没错，就是我们刚才提到的“运算能力”。很多时候我们可以简单的认为，在同样的环境下，一个任务使用的线程数量越多，它所获得的运算能力就比另一个线程数量较少的任务要来得多。运算能力自然就涉及到任务执行的快慢。您可以设想一下，有一个生产任务，和一个消费任务，它们使用一个队列做临时存储。在理想情况下，生产和消费的速度应该保持相同，这样可以带来最好的吞吐量。如果生产任务执行较快，则队列中便会产生堆积，反之消费任务就会不断等待，吞吐量也会下降。因此，在实现的时候，我们往往会为生产任务和消费任务分别指派独立的线程池，并且通过增加或减少线程池内线程数量来条件运算能力，使生产和消费的步调达到平衡。</p>
+<p>   使用独立的线程池来控制运算能力的做法很常见，一个典型的案例便是SEDA架构：整个架构由多个Stage连接而成，每个Stage均由一个队列和一个独立的线程池组成，调节器会根据队列中任务的数量来调节线程池内的线程数量，最终使应用程序获得优异的并发能力。</p>
+<p>   在Windows操作系统中，Server 2003及之前版本的API也只提供了进程内部单一的线程池，不过在Vista及Server 2008的API中，除了改进线程池的性能之外，还提供了在同一进程内创建多个线程池的接口。很可惜，.NET直到如今的4.0版本，依旧没有提供构建独立线程池的功能。构造一个优秀的线程池是一件相当困难的事情，幸运的是，如果我们需要这方面的功能，可以借助著名的SmartThreadPool，经过那么多年的考验，相信它已经足够成熟了。如果需要，我们还可以对它做一定修改——毕竟在不同情况下，我们对线程池的要求也不完全相同。</p>
+<p><span id="inline-green">IO线程池:</span><br>   IO线程池便是为异步IO服务的线程池。</p>
+<p>   访问IO最简单的方式（如读取一个文件）便是阻塞的，代码会等待IO操作成功（或失败）之后才继续执行下去，一切都是顺序的。但是，阻塞式IO有很多缺点，例如让UI停止响应，造成上下文切换，CPU中的缓存也可能被清除甚至内存被交换到磁盘中去，这些都是明显影响性能的做法。此外，每个IO都占用一个线程，容易导致系统中线程数量很多，最终限制了应用程序的伸缩性。因此，我们会使用“异步IO”这种做法。</p>
+<p>   在使用异步IO时，访问IO的线程不会被阻塞，逻辑将会继续下去。操作系统会负责把结果通过某种方法通知我们，一般说来，这种方式是“回调函数”。异步IO在执行过程中是不占用应用程序的线程的，因此我们可以用少量的线程发起大量的IO，所以应用程序的响应能力也可以有所提高。此外，同时发起大量IO操作在某些时候会有额外的性能优势，例如磁盘和网络可以同时工作而不互相冲突，磁盘还可以根据磁头的位置来访问就近的数据，而不是根据请求的顺序进行数据读取，这样可以有效减少磁头的移动距离。</p>
+<p>   Windows操作系统中有多种异步IO方式，但是性能最高，伸缩性最好的方式莫过于传说中的“IO完成端口（I/O Completion Port，IOCP）”了，这也是.NET中封装的唯一异步IO方式。大约一年半前，老赵写过一篇文章《正确使用异步操作》，其中除了描述计算密集型和IO密集型操作的区别和效果之外，还简单地讲述了IOCP与CLR交互的方式，摘录如下：</p>
+<p>   当我们希望进行一个异步的IO-Bound Operation时，CLR会（通过Windows API）发出一个IRP（I/O Request Packet）。当设备准备妥当，就会找出一个它“最想处理”的IRP（例如一个读取离当前磁头最近的数据的请求）并进行处理，处理完毕后设备将会（通过Windows）交还一个表示工作完成的IRP。CLR会为每个进程创建一个IOCP（I/O Completion Port）并和Windows操作系统一起维护。IOCP中一旦被放入表示完成的IRP之后（通过内部的ThreadPool.BindHandle完成），CLR就会尽快分配一个可用的线程用于继续接下去的任务。</p>
+<p>   不过事实上，使用Windows API编写IOCP非常复杂。而在.NET中，由于需要迎合标准的APM（异步编程模型），在使用方便的同时也放弃一定的控制能力。因此，在一些真正需要高吞吐量的时候（如编写服务器），不少开发人员还是会选择直接使用Native Code编写相关代码。不过在绝大部分的情况下，.NET中利用IOCP的异步IO操作已经足以获得非常优秀的性能了。使用APM方式在.NET中使用异步IO非常简单，如下：</p>
+<pre><code>static void Main(string[] args)
+{
+    WebRequest request = HttpWebRequest.Create(&quot;http://www.cnblogs.com&quot;);
+    request.BeginGetResponse(HandleAsyncCallback, request);
+}
+
+static void HandleAsyncCallback(IAsyncResult ar)
+{
+    WebRequest request = (WebRequest)ar.AsyncState;
+    WebResponse response = request.EndGetResponse(ar);
+    // more operations...
+}
+</code></pre><p>   BeginGetResponse将发起一个利用IOCP的异步IO操作，并在结束时调用HandleAsyncCallback回调函数。那么，这个回调函数是由哪里的线程执行的呢？没错，就是传说中“IO线程池”的线程。.NET在一个进程中准备了两个线程池，除了上篇文章中所提到的CLR线程池之外，它还为异步IO操作的回调准备了一个IO线程池。IO线程池的特性与CLR线程池类似，也会动态地创建和销毁线程，并且也拥有最大值和最小值（可以参考上一篇文章列举出的API）。</p>
+<p>   只可惜，IO线程池也仅仅是那“一整个”线程池，CLR线程池的缺点IO线程池也一应俱全。例如，在使用异步IO方式读取了一段文本之后，下一步操作往往是对其进行分析，这就进入了计算密集型操作了。但对于计算密集型操作来说，如果使用整个IO线程池来执行，我们无法有效的控制某项任务的运算能力。因此在有些时候，我们在回调函数内部会把计算任务再次交还给独立的线程池。这么做从理论上看会增大线程调度的开销，不过实际情况还得看具体的评测数据。如果它真的成为影响性能的关键因素之一，我们就可能需要使用Native Code来调用IOCP相关API，将回调任务直接交给独立的线程池去执行了。</p>
+<p>   我们也可以使用代码来操作IO线程池，例如下面这个接口便是向IO线程池递交一个任务：</p>
+<pre><code>public static class ThreadPool
+{
+    public static bool UnsafeQueueNativeOverlapped(NativeOverlapped* overlapped);
+}   
+</code></pre><p>   NativeOverlapped包含了一个IOCompletionCallback回调函数及一个缓冲对象，可以通过Overlapped对象创建。Overlapped会包含一个被固定的空间，这里“固定”的含义表示不会因为GC而导致地址改变，甚至不会被置换到硬盘上的Swap空间去。这么做的目的是迎合IOCP的要求，但是很明显它也会降低程序性能。因此，我们在实际编程中几乎不会使用这个方法。</p>
+<p><span id="inline-blue">线程池的相关实验。级注意事项:</span> </p>
+<p><span id="inline-purple">小白写的参考实例:</span> <a id="download" href="\images\线程池-相关实验.zip"><i class="fa fa-download"></i><span>下载实例</span></a></p>
+<p><span id="inline-yellow">参考实例效果图:</span><br>                <img src="\images\线程池相关实验代码图.png" alt=""><br><br>                <img src="\images\线程池相关实验代码图1.png" alt=""><br> </p>
+<p><span id="inline-green">参考实例代码图:</span><br>                <img src="\images\线程池实验.png" alt=""><br><br>                <img src="\images\线程池实验1.png" alt=""><br><br>                 注:如果有不懂的地方可以联系小白，在博客的关于里面可以找到小白的联系方式！</p>
+<p>送上一句晚安心语: 【遥遥的梦亮起一盏灯，听我心愿一声声，但愿你平安一程又一程，但愿所有的美好装满您的梦，祝您今晚安然入睡，好梦！】</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>梦想实现未来，我将倾尽天下！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="忘记为止 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="忘记为止 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    忘记为止
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://2302283529.github.io/2018/09/20/Thread/RelatedExperiments/" title="信号量机制---线程池相关实现，">https://2302283529.github.io/2018/09/20/Thread/RelatedExperiments/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+    
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+            -------------本文结束
+            <i class="fa fa-paw"></i>
+            感谢您的阅读-------------
+        </div>
+    
+</div>
+     
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/高并发/" rel="tag"><i class="fa fa-tag"></i> 高并发</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+          <div class="social-like">
+            
+
+            
+              <div class="fb_like">
+                <div class="fb-like" data-layout="button_count" data-share="true"></div>
+              </div>
+            
+          </div>
+        
+
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/19/Thread/ThreadPool/" rel="next" title="信号量机制---线程池准备工作，">
+                <i class="fa fa-chevron-left"></i> 信号量机制---线程池准备工作，
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/09/SQL Server/Storedprocedure/" rel="prev" title="Sql server  --存储过程的使用">
+                Sql server  --存储过程的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+<div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+</div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTc2NS8xNjI5Mg=="></div>
+    </div>
+
+  
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatarInsert.gif"
+                alt="忘记为止" />
+            
+              <p class="site-author-name" itemprop="name">忘记为止</p>
+              <p class="site-description motion-element" itemprop="description">单枪匹马你别怕，一腔孤勇又如何，这一路你可以哭，但不能怂。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yourname" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-globe"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-globe"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+<div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("04/28/2018 15:13:14");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+    <div id="music163player">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=36871866&auto=1&height=66"></iframe>
+    <div>
+  </aside>
+
+
+        
+      </div>   
+    </main>      
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">忘记为止</span>
+
+  
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span class="post-meta-divider">|</span>
+
+<div class="powered-by">
+  <span id="busuanzi_container_site_uv">
+  版权所属:未来的她
+  </span>
+</div>
+
+<span class="post-meta-divider">|</span>
+
+
+<div class="theme-info">
+  <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">开发人:李宝</a>
+</div>
+
+
+<span class="post-meta-divider">|</span>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共16.1k字</span>
+</div>
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("kKwCSVqTTMnkOKsccFjXvikv-gzGzoHsz", "za397LFqnsub93tjIOkwWsu0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  <script type="text/javascript">
+  wpac_init = window.wpac_init || [];
+  wpac_init.push({widget: 'Rating', id: 14330,
+    el: 'wpac-rating',
+    color: 'fc6423'
+  });
+  (function() {
+    if ('WIDGETPACK_LOADED' in window) return;
+    WIDGETPACK_LOADED = true;
+    var mc = document.createElement('script');
+    mc.type = 'text/javascript';
+    mc.async = true;
+    mc.src = '//embed.widgetpack.com/widget.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+  })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src= "/js/src/instantclick.min.js" data-no-instant></script>
+  <script data-no-instant>InstantClick.init();</script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
