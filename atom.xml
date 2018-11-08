@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://2302283529.github.io/"/>
-  <updated>2018-10-31T10:27:59.125Z</updated>
+  <updated>2018-11-08T12:54:41.330Z</updated>
   <id>https://2302283529.github.io/</id>
   
   <author>
@@ -15,6 +15,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>程序员专用离职信</title>
+    <link href="https://2302283529.github.io/2018/11/08/ProgrammerTips/ResignationLetter/"/>
+    <id>https://2302283529.github.io/2018/11/08/ProgrammerTips/ResignationLetter/</id>
+    <published>2018-11-08T12:08:19.423Z</published>
+    <updated>2018-11-08T12:54:41.330Z</updated>
+    
+    <content type="html"><![CDATA[<p><span id="inline-blue">程序员专用离职信:</span></p><pre><code>程序员每个人都会遇到离职的时候，所以小白推荐大家用的离职书，堪称为经典。呜呜呜，嗷嗷嗷！</code></pre><a id="more"></a><p><span id="inline-yellow">辞职信NO1：</span></p><font color="#FF0000"><br>           尊敬的公司领导:<br><br>                 此时辞呈，敬请海涵。<br><br>                 当初公司募才纳新，未嫌我才疏学浅，承蒙收容。入职以来，领导<br>             厚爱，同事相亲，至今心怀感念，不敢稍有遣忘。<br><br>                 勤心劳作，不求闻达富贵，薪酬所愿，只需温饱残喘，欲效犬马，以图恩报。<br><br>                 时至今日，事与愿违，本当坚持，然孝亲养身，责任在肩，今日请辞，实属无奈，提携之恩，栽培之情，铭记五内，永吾所愿人生有时，必当回报！<br><br>                 续聘人手，亦须时日，一月之内，必当坚守！<br><br>                 词不达意，尚析见谅！<br><br>                                                              辞职人：向勇<br><br>                                                              2018年11月8日<br><br>                                                              原因：人脸闸机，问题存在，历史不复当初，加班依然不在。心态以没，代码不出，头发以掉，人脸一脱。<br></font><br><span id="inline-green">辞职信NO2:</span><br><font color="#FF0000"><br>           尊敬的公司领导:<br><br>                 值此用人之际，不期请辞,实属不敬。<br><br>                 历经四季，余已凡才，承蒙殊遇。幸受公司各领导知遇知恩，得以<br>                 与诸位贤达共事。<br><br>                 时光荏苒，吾经竭力而为，以图报效，虽幸遇领导恩教，然资质愚钝，图添麻烦，每思于此，<br>                 未尝不惶恐叹息，吾有所长，终难掩寸之短。<br><br>                 思之在三，恐吾业太深，与司与己，皆无义可言，遂决意就此辞去。<br><br>                 一朝共事，终身莫逆，暂别之后，他日或幸遇山水之间，余当执壶悲殇，与君等邀月共饮，谈笑江湖！<br><br>                 又诉离殇，执笔涕零，临纸神驰，不尽欲言，只惟愿诸君同仁，飞黄腾达，再铸辉煌，<br><br><br>                                                              辞职人：向勇<br><br>                                                              2018年11月8日<br><br>                                                              原因：人脸闸机，问题存在，历史不复当初，加班依然不在。心态以没，代码不出，头发以掉，人脸一脱。<br></font>  ]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;span id=&quot;inline-blue&quot;&gt;程序员专用离职信:&lt;/span&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;程序员每个人都会遇到离职的时候，所以小白推荐大家用的离职书，堪称为经典。呜呜呜，嗷嗷嗷！
+&lt;/code&gt;&lt;/pre&gt;
+    
+    </summary>
+    
+      <category term="程序员心得体会" scheme="https://2302283529.github.io/categories/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%83%E5%BE%97%E4%BD%93%E4%BC%9A/"/>
+    
+    
+      <category term="程序员心得体会" scheme="https://2302283529.github.io/tags/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%83%E5%BE%97%E4%BD%93%E4%BC%9A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sql server  --Case When then else使用</title>
+    <link href="https://2302283529.github.io/2018/11/08/SQL%20Server/Conversion/"/>
+    <id>https://2302283529.github.io/2018/11/08/SQL Server/Conversion/</id>
+    <published>2018-11-08T11:56:02.063Z</published>
+    <updated>2018-11-08T12:06:34.745Z</updated>
+    
+    <content type="html"><![CDATA[<p><span id="inline-blue">Case When then else函数说明:</span></p><pre><code>函数寓意为行列转换的过程，很想三元运算符的思路。有不懂的小伙伴可以私聊我，最近小宝毕竟忙，博客会更新的比较慢，望见谅！</code></pre><a id="more"></a><p><span id="inline-yellow">例如:</span><br>    <font color="#FF0000"> select row_number() OVER(ORDER BY [User].ID) as 编号, //按照User.ID进行排序<br>                           UID as 用户编号, Name as 姓名,<br>                           max(case ScoreName when ‘英语’ then Score else 0 end) 英语,  //判断ScoreName等于英语的情况下，返回为Score的值 否则为0<br>                           max(case ScoreName when ‘数学’ then Score else 0 end) 数学   //判断ScoreName等于数学的情况下，返回为Score的值 否则为0<br>                           from Score,[User] WHERE Score.UID=[User].ID group by UID,[User].ID,Name   //然后进行分组。按照两种ID进行分组<br>    </font><br><span id="inline-green">业务功能:</span><br>需要根据最近的功能进行不同的调整。如果你是初学者，建议最好不要复制，因为代码的世界，是需要自己一点一点的积累。少年加油，愿你走出半生，归来仍是少年！</p><p>送上一句晚安心语:【放弃与放手的区别：放弃是牺牲本来属于你的，放手是放下那些从来不是你的。】</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;span id=&quot;inline-blue&quot;&gt;Case When then else函数说明:&lt;/span&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;函数寓意为行列转换的过程，很想三元运算符的思路。有不懂的小伙伴可以私聊我，最近小宝毕竟忙，博客会更新的比较慢，望见谅！
+&lt;/code&gt;&lt;/pre&gt;
+    
+    </summary>
+    
+      <category term="Sql server" scheme="https://2302283529.github.io/categories/Sql-server/"/>
+    
+    
+      <category term="Sql server" scheme="https://2302283529.github.io/tags/Sql-server/"/>
+    
+  </entry>
   
   <entry>
     <title>PIM大通项目分析，</title>
